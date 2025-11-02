@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Busque designs de tatuagem no Pinterest">
+  <title>Buscar Design de Tatuagem</title>
+  <style>
+    :root {
+      --preto-profundo: #0a0a0a;
+      --preto-carvão: #1a1a1a;
+      --cinza-escuro: #2d2d2d;
+      --cinza-medio: #4a4a4a;
+      --cinza-claro: #666666;
+      --cinza-suave: #8a8a8a;
+      --branco-puro: #ffffff;
+      --branco-gelo: #f8f8f8;
+      --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(42, 42, 42, 0.8) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(35, 35, 35, 0.6) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(28, 28, 28, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, var(--preto-profundo) 0%, var(--preto-carvão) 50%, var(--preto-profundo) 100%);
+      color: var(--branco-gelo);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Efeito de respingo de tinta no fundo */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(74, 74, 74, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 30%, rgba(74, 74, 74, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 30% 70%, rgba(74, 74, 74, 0.12) 0%, transparent 30%),
+        radial-gradient(circle at 70% 80%, rgba(74, 74, 74, 0.09) 0%, transparent 22%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      margin: 2.5rem 0;
+      position: relative;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
+      color: var(--branco-puro);
+      margin-bottom: 1.25rem;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid var(--branco-puro);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      font-weight: 300;
+      position: relative;
+    }
+
+    h1::before {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cinza-suave), transparent);
+    }
+
+    .search-section {
+      width: min(90%, 500px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    #searchForm {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--cinza-escuro);
+      border-radius: 12px;
+      background: rgba(26, 26, 26, 0.8);
+      color: var(--branco-gelo);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    input[type="search"]:focus {
+      outline: none;
+      border-color: var(--cinza-suave);
+      box-shadow: 0 0 0 2px rgba(138, 138, 138, 0.2);
+      background: rgba(26, 26, 26, 0.9);
+    }
+
+    input[type="search"]::placeholder {
+      color: var(--cinza-suave);
+      opacity: 0.8;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1rem;
+      background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
+      color: var(--branco-puro);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
+      transform: translateY(-2px);
+      box-shadow: var(--sombra-suave);
+    }
+
+    button:hover::before {
+      left: 100%;
+    }
+
+    /* Estilos da Galeria - CAIXA QUADRADA */
+    .gallery-section {
+      width: min(95%, 500px);
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 20px;
+      box-shadow: var(--sombra-suave);
+      border: 1px solid rgba(74, 74, 74, 0.3);
+      backdrop-filter: blur(15px);
+      position: relative;
+    }
+
+    .gallery-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(74, 74, 74, 0.1) 0%, transparent 50%);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.8),
+        0 8px 30px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(145deg, var(--preto-carvão), var(--cinza-escuro));
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgba(74, 74, 74, 0.5);
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 1s ease-in-out;
+      height: 100%;
+    }
+
+    .carousel-item {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      padding: 15px;
+      filter: grayscale(20%) contrast(110%);
+      transition: filter 0.3s ease;
+    }
+
+    .carousel-item:hover img {
+      filter: grayscale(0%) contrast(120%);
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .carousel-btn {
+      background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
+      color: var(--branco-gelo);
+      border: 1px solid var(--cinza-claro);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+      border-radius: 50%;
+    }
+
+    .carousel-btn:hover {
+      background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+      border-color: var(--cinza-suave);
+    }
+
+    .carousel-indicators {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .indicator {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--cinza-claro);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--cinza-escuro);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .indicator::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+      border-radius: 50%;
+    }
+
+    .indicator.active {
+      background: var(--branco-gelo);
+      transform: scale(1.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      border-color: var(--cinza-suave);
+    }
+
+    /* BOTÕES DE CONTATO MAIORES */
+    .contact-icons {
+      margin-top: auto;
+      padding: 2rem 1.25rem;
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-icons a {
+      background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
+      border-radius: 50%;
+      padding: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--cinza-claro);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+    }
+
+    .contact-icons a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+      border-radius: 50%;
+    }
+
+    .contact-icons img {
+      width: 3.5rem;
+      filter: brightness(0.9);
+      transition: all 0.3s ease;
+    }
+
+    .contact-icons a:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border-color: var(--cinza-suave);
+    }
+
+    .contact-icons a:hover img {
+      filter: brightness(1.2);
+    }
+
+    /* Botão de Compartilhamento */
+    .share-btn {
+      background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
+      border-radius: 50%;
+      padding: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--cinza-claro);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+    }
+
+    .share-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+      border-radius: 50%;
+    }
+
+    .share-btn svg {
+      width: 3rem;
+      height: 3rem;
+      fill: var(--branco-gelo);
+      transition: all 0.3s ease;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border-color: var(--cinza-suave);
+    }
+
+    .share-btn:hover svg {
+      fill: var(--branco-puro);
+      transform: rotate(15deg);
+    }
+
+    /* Modal de Compartilhamento */
+    .share-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .share-modal.active {
+      display: flex;
+    }
+
+    .share-content {
+      background: rgba(26, 26, 26, 0.95);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: var(--sombra-suave);
+      border: 1px solid var(--cinza-claro);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .share-content h3 {
+      color: var(--branco-puro);
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .share-url {
+      background: rgba(42, 42, 42, 0.8);
+      border: 1px solid var(--cinza-escuro);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      color: var(--branco-gelo);
+      word-break: break-all;
+      font-size: 0.9rem;
+    }
+
+    .share-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .share-actions button {
+      flex: 1;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
+      color: var(--branco-gelo);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .share-actions button:hover {
+      background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
+      transform: translateY(-2px);
+    }
+
+    .close-share {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--cinza-suave);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-share:hover {
+      color: var(--branco-puro);
+    }
+
+    /* RODAPÉ */
+    .copyright-footer {
+      width: 100%;
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.8), transparent);
+      border-top: 1px solid var(--cinza-escuro);
+      margin-top: auto;
+      font-size: 0.9rem;
+      color: var(--cinza-suave);
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+
+    .copyright-footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cinza-suave), transparent);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    h1::after {
+      content: "|";
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Efeitos de textura metálica */
+    .metal-texture {
+      position: relative;
+    }
+
+    .metal-texture::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.03) 0%, 
+        transparent 20%, 
+        rgba(255, 255, 255, 0.05) 40%, 
+        transparent 60%, 
+        rgba(255, 255, 255, 0.02) 80%, 
+        transparent 100%);
+      pointer-events: none;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .gallery-section {
+        width: 90%;
+        padding: 1rem;
+      }
+      
+      .carousel-btn {
+        width: 45px;
+        height: 45px;
+      }
+      
+      .contact-icons {
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+      }
+      
+      .contact-icons a,
+      .share-btn {
+        width: 70px;
+        height: 70px;
+        padding: 15px;
+      }
+      
+      .contact-icons img {
+        width: 3rem;
+      }
+      
+      .share-btn svg {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-section {
+        width: 95%;
+      }
+      
+      .carousel-controls {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .copyright-footer {
+        font-size: 0.8rem;
+        padding: 1.25rem;
+      }
+      
+      .contact-icons {
+        gap: 1rem;
+      }
+      
+      .contact-icons a,
+      .share-btn {
+        width: 65px;
+        height: 65px;
+        padding: 14px;
+      }
+      
+      .contact-icons img {
+        width: 2.8rem;
+      }
+      
+      .share-btn svg {
+        width: 2.3rem;
+        height: 2.3rem;
+      }
+      
+      .indicator {
+        width: 14px;
+        height: 14px;
+      }
+      
+      .share-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="typing-title" aria-label="Buscar Design de Tatuagem"></h1>
+  </header>
+  
+  <main class="search-section">
+    <form id="searchForm" role="search">
+      <label for="searchTerm" class="sr-only">Digite o estilo de tatuagem</label>
+      <input 
+        type="search" 
+        id="searchTerm" 
+        placeholder="Ex: Old School, Geométrica, Realismo..." 
+        aria-required="true"
+      />
+      <button type="submit" class="metal-texture">Buscar no Pinterest</button>
+    </form>
+  </main>
+  
+  <!-- Seção da Galeria em Carrossel -->
+  <section class="gallery-section metal-texture">
+    <div class="carousel-container">
+      <div class="carousel" id="carousel">
+        <!-- Itens do carrossel serão inseridos via JavaScript -->
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <button class="carousel-btn metal-texture" id="prevBtn" aria-label="Imagem anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="carousel-indicators" id="indicators">
+        <!-- Indicadores serão inseridos via JavaScript -->
+      </div>
+      <button class="carousel-btn metal-texture" id="nextBtn" aria-label="Próxima imagem">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+  
+  <!-- BOTÕES DE CONTATO E COMPARTILHAMENTO -->
+  <footer class="contact-icons">
+    <a href="https://wa.me/559281708914" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="metal-texture">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" loading="lazy">
+    </a>
+    <a href="https://www.instagram.com/ale.tatuagem/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="metal-texture">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" loading="lazy">
+    </a>
+    <div class="share-btn metal-texture" id="shareBtn" aria-label="Compartilhar site">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+      </svg>
+    </div>
+  </footer>
+  
+  <!-- MODAL DE COMPARTILHAMENTO -->
+  <div class="share-modal" id="shareModal">
+    <div class="share-content metal-texture">
+      <button class="close-share" id="closeShare">&times;</button>
+      <h3>Compartilhar Site</h3>
+      <div class="share-url" id="shareUrl">
+        <!-- URL será inserida via JavaScript -->
+      </div>
+      <div class="share-actions">
+        <button id="copyUrl">Copiar Link</button>
+        <button id="shareNative">Compartilhar</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- RODAPÉ DE DIREITOS AUTORAIS -->
+  <div class="copyright-footer">
+    © 2025 Alê Tatuagem. Todos os direitos reservados.
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elementos DOM
+      const searchForm = document.getElementById('searchForm');
+      const searchInput = document.getElementById('searchTerm');
+      const titleElement = document.getElementById('typing-title');
+      const carousel = document.getElementById('carousel');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const indicatorsContainer = document.getElementById('indicators');
+      const shareBtn = document.getElementById('shareBtn');
+      const shareModal = document.getElementById('shareModal');
+      const closeShare = document.getElementById('closeShare');
+      const shareUrl = document.getElementById('shareUrl');
+      const copyUrl = document.getElementById('copyUrl');
+      const shareNative = document.getElementById('shareNative');
+      
+      // Textos
+      const titleText = "Buscar Design de Tatuagem";
+      const currentUrl = window.location.href;
+      
+      // Dados da galeria - 6 imagens
+      const galleryImages = [
+        { 
+          src: "https://i.ibb.co/Dc2zTNd/1669805701022-removebg-preview.png", 
+          alt: "Tatuagem estilo Old School"
+        },
+        { 
+          src: "https://i.ibb.co/GQgVqzsw/9a556c6b0777dfe3a6f2ac62f372c7b9.jpg", 
+          alt: "Tatuagem geométrica"
+        },
+        { 
+          src: "https://i.ibb.co/M53MV7qb/b3b9bd0042e2143b92f638e89d37344a.jpg", 
+          alt: "Tatuagem realista"
+        },
+        { 
+          src: "https://i.ibb.co/HDdKht7s/9105f0cabc1c5cbf849289f4a4d3f680.jpg", 
+          alt: "Tatuagem aquarela"
+        },
+        { 
+          src: "https://i.ibb.co/vvvNbMkc/lv-0-20251021110933.gif", 
+          alt: "Tatuagem costa"
+        },
+        { 
+          src: "https://i.ibb.co/rG30BCgr/ale-tatuagem-1757344460332.gif", 
+          alt: "Tatuagem braço"
+        }
+      ];
+      
+      // Variáveis do carrossel
+      let currentIndex = 0;
+      let autoPlayInterval;
+      
+      // Função para buscar tatuagem
+      function searchTattoo(event) {
+        event.preventDefault();
+        
+        const searchTerm = searchInput.value.trim();
+        
+        if (!searchTerm) {
+          alert("Por favor, digite um estilo de tatuagem!");
+          searchInput.focus();
+          return;
+        }
+        
+        const pinterestUrl = `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(`${searchTerm} tattoo`)}`;
+        window.open(pinterestUrl, '_blank');
+      }
+      
+      // Animação de digitação
+      function typeWriter(text, element, speed = 100) {
+        let index = 0;
+        
+        function type() {
+          if (index < text.length) {
+            element.textContent += text.charAt(index);
+            index++;
+            setTimeout(type, speed);
+          } else {
+            // Remove o cursor piscante após terminar a animação
+            element.style.borderRight = 'none';
+          }
+        }
+        
+        type();
+      }
+      
+      // Inicializar carrossel
+      function initCarousel() {
+        // Adicionar imagens ao carrossel
+        galleryImages.forEach((image, index) => {
+          const carouselItem = document.createElement('div');
+          carouselItem.className = 'carousel-item';
+          
+          const img = document.createElement('img');
+          img.src = image.src;
+          img.alt = image.alt;
+          img.loading = 'lazy';
+          
+          // Adicionar tratamento de erro para imagens que não carregam
+          img.onerror = function() {
+            console.error(`Erro ao carregar imagem: ${image.src}`);
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzhhOGFhYSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbSBuw6NvIGRpc3BvbsOtdmVsPC90ZXh0Pjwvc3ZnPg==';
+          };
+          
+          carouselItem.appendChild(img);
+          carousel.appendChild(carouselItem);
+          
+          // Adicionar indicadores
+          const indicator = document.createElement('div');
+          indicator.className = 'indicator';
+          if (index === 0) indicator.classList.add('active');
+          indicator.addEventListener('click', () => goToSlide(index));
+          indicatorsContainer.appendChild(indicator);
+        });
+        
+        // Iniciar reprodução automática
+        startAutoPlay();
+      }
+      
+      // Navegar para um slide específico
+      function goToSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+      }
+      
+      // Atualizar carrossel
+      function updateCarousel() {
+        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        
+        // Atualizar indicadores
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === currentIndex);
+        });
+      }
+      
+      // Próximo slide
+      function nextSlide() {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        updateCarousel();
+      }
+      
+      // Slide anterior
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateCarousel();
+      }
+      
+      // Iniciar reprodução automática - MAIS LENTA
+      function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 7000); // Muda a cada 7 segundos (mais lento)
+      }
+      
+      // Parar reprodução automática
+      function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+      }
+      
+      // Funções de Compartilhamento
+      function openShareModal() {
+        shareUrl.textContent = currentUrl;
+        shareModal.classList.add('active');
+      }
+      
+      function closeShareModal() {
+        shareModal.classList.remove('active');
+      }
+      
+      function copyToClipboard() {
+        navigator.clipboard.writeText(currentUrl).then(() => {
+          alert('Link copiado para a área de transferência!');
+          closeShareModal();
+        }).catch(err => {
+          console.error('Erro ao copiar: ', err);
+          alert('Erro ao copiar o link. Tente novamente.');
+        });
+      }
+      
+      function shareNativeFunction() {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Alê Tatuagem - Buscar Design de Tatuagem',
+            text: 'Confira este site incrível para buscar designs de tatuagem no Pinterest!',
+            url: currentUrl
+          }).then(() => {
+            console.log('Compartilhamento realizado com sucesso!');
+            closeShareModal();
+          }).catch(err => {
+            console.error('Erro ao compartilhar: ', err);
+          });
+        } else {
+          copyToClipboard();
+        }
+      }
+      
+      // Event Listeners
+      searchForm.addEventListener('submit', searchTattoo);
+      prevBtn.addEventListener('click', prevSlide);
+      nextBtn.addEventListener('click', nextSlide);
+      shareBtn.addEventListener('click', openShareModal);
+      closeShare.addEventListener('click', closeShareModal);
+      copyUrl.addEventListener('click', copyToClipboard);
+      shareNative.addEventListener('click', shareNativeFunction);
+      
+      // Fechar modal ao clicar fora
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) {
+          closeShareModal();
+        }
+      });
+      
+      // Pausar reprodução automática ao interagir com o carrossel
+      carousel.addEventListener('mouseenter', stopAutoPlay);
+      carousel.addEventListener('mouseleave', startAutoPlay);
+      
+      // Permitir busca com Enter mesmo sem o formulário (redundância para acessibilidade)
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          searchTattoo(e);
+        }
+      });
+      
+      // Iniciar animação e carrossel
+      typeWriter(titleText, titleElement);
+      initCarousel();
+    });
+  </script>
+</body>
+</html>
