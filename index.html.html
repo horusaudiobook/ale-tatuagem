@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Busque designs de tatuagem no Pinterest e agende sua tattoo">
+  <meta name="description" content="Busque designs de tatuagem no Pinterest e agende sua tattoo com Alê Tatuagem">
   <title>Buscar Design de Tatuagem | Alê Tatuagem</title>
   <style>
+    /* ===== RESET & ROOT ===== */
     :root {
       --preto-profundo: #0a0a0a;
       --preto-carvão: #1a1a1a;
@@ -26,6 +27,11 @@
       box-sizing: border-box;
     }
 
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
     body {
       background: 
         radial-gradient(circle at 20% 80%, rgba(42, 42, 42, 0.8) 0%, transparent 50%),
@@ -34,17 +40,18 @@
         linear-gradient(135deg, var(--preto-profundo) 0%, var(--preto-carvão) 50%, var(--preto-profundo) 100%);
       color: var(--branco-gelo);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       line-height: 1.6;
+      padding: 1rem;
       position: relative;
-      padding: 2rem 1rem;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    /* Efeito de respingo de tinta no fundo */
+    /* ===== FUNDO COM RESPINHOS ===== */
     body::before {
       content: '';
       position: fixed;
@@ -61,70 +68,89 @@
       z-index: -1;
     }
 
-    /* Container Principal */
+    /* ===== CONTAINER PRINCIPAL ===== */
     .main-container {
-      max-width: 600px;
+      max-width: 560px;
       width: 100%;
       margin: 0 auto;
       position: relative;
       z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding: 0.5rem 0;
     }
 
-    /* Header */
+    .main-container::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .main-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .main-container::-webkit-scrollbar-thumb {
+      background: var(--cinza-escuro);
+      border-radius: 10px;
+    }
+
+    /* ===== HEADER ===== */
     header {
       text-align: center;
-      margin-bottom: 2rem;
     }
 
-    h1 {
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
-      color: var(--branco-puro);
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.6rem;
       font-weight: 300;
-      position: relative;
-      display: inline-block;
+      color: var(--branco-puro);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      margin-bottom: 0.25rem;
     }
 
-    h1::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cinza-suave), transparent);
+    .logo-icon {
+      font-size: 1.8rem;
     }
 
-    /* Descrição */
-    .description {
+    .subtitle {
       text-align: center;
       color: var(--cinza-suave);
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
-    /* Seção de Busca */
+    /* ===== SEÇÃO DE BUSCA ===== */
     .search-section {
       width: 100%;
-      margin-bottom: 2rem;
     }
 
     #searchForm {
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .input-group {
       position: relative;
     }
 
+    .input-group .search-icon {
+      position: absolute;
+      left: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
     input[type="search"] {
       width: 100%;
-      padding: 1rem 1.2rem;
+      padding: 0.9rem 1.2rem 0.9rem 3.2rem;
       font-size: 1rem;
       border: 1px solid var(--cinza-escuro);
       border-radius: 16px;
@@ -146,9 +172,9 @@
       opacity: 0.7;
     }
 
-    button {
+    .btn-primary {
       width: 100%;
-      padding: 1rem;
+      padding: 0.9rem;
       font-size: 1rem;
       background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
       color: var(--branco-puro);
@@ -162,7 +188,7 @@
       overflow: hidden;
     }
 
-    button::before {
+    .btn-primary::before {
       content: '';
       position: absolute;
       top: 0;
@@ -173,44 +199,49 @@
       transition: left 0.5s;
     }
 
-    button:hover {
+    .btn-primary:hover {
       background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
       transform: translateY(-2px);
       box-shadow: var(--sombra-suave);
     }
 
-    button:hover::before {
+    .btn-primary:hover::before {
       left: 100%;
     }
 
-    /* Sugestões de Busca */
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* ===== SUGESTÕES ===== */
     .suggestions {
-      margin-top: 1.5rem;
+      margin-top: 0.8rem;
       text-align: center;
     }
 
     .suggestions p {
       color: var(--cinza-suave);
-      font-size: 0.85rem;
-      margin-bottom: 0.8rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.6rem;
     }
 
     .suggestions-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
+      gap: 0.5rem;
       justify-content: center;
     }
 
     .tag {
       background: rgba(74, 74, 74, 0.3);
       border: 1px solid var(--cinza-escuro);
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 0.9rem;
       border-radius: 30px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--branco-gelo);
       cursor: pointer;
       transition: all 0.3s ease;
+      user-select: none;
     }
 
     .tag:hover {
@@ -219,86 +250,25 @@
       border-color: var(--cinza-suave);
     }
 
-    /* Card de Informação com CTA */
-    .info-card {
-      background: rgba(26, 26, 26, 0.7);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 1.8rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(74, 74, 74, 0.4);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .info-card:hover {
-      border-color: var(--cinza-suave);
-      box-shadow: var(--sombra-suave);
-    }
-
-    .info-card h3 {
-      color: var(--branco-puro);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-    }
-
-    .info-card p {
-      color: var(--cinza-suave);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin-bottom: 1.5rem;
-    }
-
-    /* CTA Button */
-    .cta-whatsapp {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      background: linear-gradient(135deg, var(--verde-whatsapp), var(--verde-whatsapp-dark));
-      color: var(--branco-puro);
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    }
-
-    .cta-whatsapp:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-      background: linear-gradient(135deg, var(--verde-whatsapp-dark), var(--verde-whatsapp));
-    }
-
-    .cta-whatsapp:active {
+    .tag:active {
       transform: translateY(0);
     }
 
-    .cta-whatsapp svg {
-      width: 1.5rem;
-      height: 1.5rem;
-      fill: var(--branco-puro);
-    }
-
-    /* BOTÕES DE CONTATO */
+    /* ===== BOTÕES DE CONTATO ===== */
     .contact-icons {
-      margin: 1rem 0;
+      margin: 0.5rem 0;
       display: flex;
-      gap: 2rem;
+      gap: 1.8rem;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
     }
 
-    .contact-icons a {
+    .contact-icons a,
+    .share-btn {
       background: linear-gradient(135deg, var(--cinza-escuro), var(--cinza-medio));
       border-radius: 50%;
-      padding: 18px;
+      padding: 15px;
       transition: all 0.3s ease;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
       border: 2px solid var(--cinza-claro);
@@ -307,55 +277,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 75px;
-      height: 75px;
-    }
-
-    .contact-icons a::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
-      border-radius: 50%;
-    }
-
-    .contact-icons img {
-      width: 2.8rem;
-      filter: brightness(0.9);
-      transition: all 0.3s ease;
-    }
-
-    .contact-icons a:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-      border-color: var(--cinza-suave);
-    }
-
-    .contact-icons a:hover img {
-      filter: brightness(1.2);
-    }
-
-    /* Botão de Compartilhamento */
-    .share-btn {
-      background: linear-gradient(135deg, var(--cinza-medio), var(--cinza-escuro));
-      border-radius: 50%;
-      padding: 18px;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-      border: 2px solid var(--cinza-claro);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 75px;
-      height: 75px;
+      width: 65px;
+      height: 65px;
+      text-decoration: none;
       cursor: pointer;
     }
 
+    .contact-icons a::before,
     .share-btn::before {
       content: '';
       position: absolute;
@@ -367,17 +295,32 @@
       border-radius: 50%;
     }
 
-    .share-btn svg {
-      width: 2.6rem;
-      height: 2.6rem;
-      fill: var(--branco-gelo);
+    .contact-icons img {
+      width: 2.4rem;
+      filter: brightness(0.9);
       transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
 
+    .share-btn svg {
+      width: 2.2rem;
+      height: 2.2rem;
+      fill: var(--branco-gelo);
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-icons a:hover,
     .share-btn:hover {
       transform: translateY(-5px) scale(1.05);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
       border-color: var(--cinza-suave);
+    }
+
+    .contact-icons a:hover img {
+      filter: brightness(1.2);
     }
 
     .share-btn:hover svg {
@@ -385,7 +328,36 @@
       transform: rotate(15deg);
     }
 
-    /* Modal de Compartilhamento */
+    /* ===== TOOLTIP ===== */
+    .contact-icons a[aria-label] {
+      position: relative;
+    }
+
+    .contact-icons a[aria-label]::after {
+      content: attr(aria-label);
+      position: absolute;
+      bottom: -2.2rem;
+      left: 50%;
+      transform: translateX(-50%) scale(0.8);
+      background: var(--preto-carvão);
+      color: var(--branco-gelo);
+      padding: 0.2rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      border: 1px solid var(--cinza-escuro);
+    }
+
+    .contact-icons a[aria-label]:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* ===== MODAL ===== */
     .share-modal {
       display: none;
       position: fixed;
@@ -393,11 +365,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(10px);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      padding: 1rem;
     }
 
     .share-modal.active {
@@ -411,12 +384,13 @@
       box-shadow: var(--sombra-suave);
       border: 1px solid var(--cinza-claro);
       max-width: 400px;
-      width: 90%;
+      width: 100%;
       text-align: center;
-      animation: fadeIn 0.3s ease;
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
     }
 
-    @keyframes fadeIn {
+    @keyframes modalFadeIn {
       from {
         opacity: 0;
         transform: scale(0.95);
@@ -425,6 +399,11 @@
         opacity: 1;
         transform: scale(1);
       }
+    }
+
+    .share-content .modal-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
     }
 
     .share-content h3 {
@@ -468,9 +447,13 @@
       transform: translateY(-2px);
     }
 
+    .share-actions button:active {
+      transform: translateY(0);
+    }
+
     .close-share {
       position: absolute;
-      top: 1rem;
+      top: 0.75rem;
       right: 1rem;
       background: none;
       border: none;
@@ -478,8 +461,8 @@
       font-size: 1.8rem;
       cursor: pointer;
       transition: color 0.3s ease;
-      width: auto;
-      padding: 0.5rem;
+      padding: 0.25rem 0.5rem;
+      line-height: 1;
     }
 
     .close-share:hover {
@@ -488,20 +471,31 @@
       transform: none;
     }
 
-    /* RODAPÉ */
+    /* ===== RODAPÉ ===== */
     .copyright-footer {
       width: 100%;
       text-align: center;
-      padding: 1.5rem;
+      padding: 0.8rem;
       background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.6), transparent);
       border-top: 1px solid var(--cinza-escuro);
-      margin-top: 1.5rem;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: var(--cinza-suave);
       letter-spacing: 0.5px;
+      margin-top: 0.2rem;
     }
 
-    /* Efeitos de textura metálica */
+    .copyright-footer .heart {
+      color: #ff4757;
+      display: inline-block;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* ===== METAL TEXTURE ===== */
     .metal-texture {
       position: relative;
     }
@@ -524,179 +518,169 @@
       border-radius: inherit;
     }
 
-    /* Responsividade */
-    @media (max-width: 768px) {
-      body {
-        padding: 1.5rem 1rem;
-      }
-      
-      .contact-icons a,
-      .share-btn {
-        width: 65px;
-        height: 65px;
-        padding: 15px;
-      }
-      
-      .contact-icons img {
-        width: 2.4rem;
-      }
-      
-      .share-btn svg {
-        width: 2.2rem;
-        height: 2.2rem;
-      }
-      
-      .info-card {
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-      }
-      
-      .info-card h3 {
-        font-size: 1.2rem;
-      }
-      
-      .cta-whatsapp {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.9rem;
-      }
-    }
-
+    /* ===== RESPONSIVIDADE ===== */
     @media (max-width: 480px) {
-      .contact-icons {
-        gap: 1rem;
-      }
+      body { padding: 0.75rem; }
+      
+      .main-container { gap: 0.8rem; }
+      
+      .logo { font-size: 1.3rem; }
+      .logo-icon { font-size: 1.5rem; }
+      .subtitle { font-size: 0.8rem; }
+      
+      .contact-icons { gap: 1.2rem; }
       
       .contact-icons a,
       .share-btn {
-        width: 60px;
-        height: 60px;
+        width: 55px;
+        height: 55px;
+        padding: 12px;
       }
       
-      .contact-icons img {
-        width: 2.2rem;
-      }
-      
+      .contact-icons img { width: 2rem; }
       .share-btn svg {
-        width: 2rem;
-        height: 2rem;
+        width: 1.8rem;
+        height: 1.8rem;
       }
       
       .tag {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+        font-size: 0.7rem;
+      }
+      
+      input[type="search"] {
+        padding: 0.7rem 1rem 0.7rem 2.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .input-group .search-icon { font-size: 1rem; }
+      .btn-primary {
+        padding: 0.7rem;
+        font-size: 0.9rem;
       }
       
       .copyright-footer {
-        font-size: 0.75rem;
-        padding: 1rem;
+        font-size: 0.65rem;
+        padding: 0.6rem;
+      }
+
+      .share-content { padding: 1.5rem; }
+      .share-actions { flex-direction: column; }
+    }
+
+    @media (max-width: 360px) {
+      .contact-icons a,
+      .share-btn {
+        width: 48px;
+        height: 48px;
+        padding: 10px;
       }
       
-      .info-card {
-        padding: 1.2rem;
+      .contact-icons img { width: 1.6rem; }
+      .share-btn svg {
+        width: 1.5rem;
+        height: 1.5rem;
       }
       
-      .cta-whatsapp {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.85rem;
-        gap: 0.6rem;
+      .contact-icons { gap: 0.8rem; }
+    }
+
+    @media (min-height: 800px) {
+      .main-container {
+        gap: 1.8rem;
       }
-      
-      .cta-whatsapp svg {
-        width: 1.2rem;
-        height: 1.2rem;
-      }
+    }
+
+    /* ===== UTILITÁRIOS ===== */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
     }
   </style>
 </head>
 <body>
   <div class="main-container">
+    <!-- HEADER -->
     <header>
-      <h1>Buscar Design de Tatuagem</h1>
+      <div class="logo">
+        <span class="logo-icon">✒️</span>
+        <span>Alê Tatuagem</span>
+      </div>
+      <p class="subtitle">Busque inspirações para sua próxima tatuagem</p>
     </header>
-    
-    <div class="description">
-      <p>Encontre inspirações incríveis para sua próxima tatuagem</p>
-    </div>
-    
+
+    <!-- SEARCH -->
     <main class="search-section">
       <form id="searchForm" role="search">
         <div class="input-group">
+          <span class="search-icon" aria-hidden="true">🔍</span>
           <input 
             type="search" 
             id="searchTerm" 
-            placeholder="Digite o desenho desejado..." 
+            placeholder="Pesquisar um estilo..." 
             aria-label="Termo de busca para tatuagem"
             autocomplete="off"
           />
         </div>
-        <button type="submit" class="metal-texture">Buscar no Pinterest</button>
+        <button type="submit" class="btn-primary metal-texture">Pesquisar no Pinterest</button>
       </form>
-      
+
+      <!-- SUGESTÕES -->
       <div class="suggestions">
-        <p>Sugestões populares:</p>
+        <p>⬇︎ Sugestões populares ⬇︎</p>
         <div class="suggestions-tags">
           <span class="tag" data-search="leão">🦁 Leão</span>
-          <span class="tag" data-search="jesus">✝️ Jesus</span>
-          <span class="tag" data-search="lobo">🐺 Lobo</span>
-          <span class="tag" data-search="águia">🦅 Águia</span>
           <span class="tag" data-search="fechamento">∞ Fechamento</span>
-          <span class="tag" data-search="mandala">🕉️ Mandala</span>
-          <span class="tag" data-search="religioso">✝️ Religioso</span>
+          <span class="tag" data-search="águia">🦅 Águia</span>
+          <span class="tag" data-search="jesus">✝️ Jesus</span>
         </div>
       </div>
     </main>
-    
-    <!-- Card de Informação com CTA para WhatsApp -->
-    <div class="info-card metal-texture">
-      <h3>🎨 Escolheu seu design?</h3>
-      <p>Encontrou a tatuagem perfeita? Agende agora mesmo com o Alê Tatuagem e transforme sua ideia em arte na pele!</p>
-      <a href="https://wa.me/559281708914?text=Olá!%20Vi%20o%20site%20e%20gostaria%20de%20agendar%20uma%20tatuagem.%20Me%20ajude%20por%20favor!" 
-         class="cta-whatsapp" 
-         target="_blank" 
-         rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.527 1.098 3.587l-1.104 3.754 3.834-1.043c1.038.562 2.18.859 3.34.86h.003c3.18 0 5.767-2.587 5.768-5.766.001-3.18-2.585-5.768-5.766-5.768zm3.157 8.311c-.156.439-.91.859-1.295.907-.353.045-.718.062-1.091-.034-.178-.046-.345-.119-.525-.186-.785-.295-1.466-.788-2.029-1.409-.154-.169-.338-.349-.449-.551-.252-.45-.402-.982-.374-1.509.025-.402.134-.802.327-1.158.16-.297.411-.544.624-.814.13-.165.217-.377.211-.593-.01-.236-.105-.444-.208-.646-.114-.222-.232-.441-.339-.667-.174-.37-.445-.712-.71-1.034-.226-.274-.507-.495-.79-.712-.188-.144-.432-.22-.669-.233-.384-.02-.768.134-1.124.298-.428.197-.82.455-1.151.788-.584.589-.917 1.382-.992 2.196-.074.744.08 1.485.446 2.136.237.423.543.809.881 1.158.483.499 1.04.934 1.623 1.308.496.319 1.039.584 1.608.78.425.146.873.22 1.324.217.4-.003.808-.09 1.182-.256.498-.222.957-.529 1.336-.907.289-.29.524-.638.664-1.018.12-.331.082-.696-.012-1.036-.069-.254-.218-.484-.355-.705-.195-.316-.419-.608-.656-.887-.164-.194-.384-.345-.566-.531-.133-.137-.289-.254-.378-.422-.091-.172-.108-.384-.021-.561.094-.191.249-.34.389-.499.24-.27.507-.512.748-.791.166-.192.386-.334.595-.485.112-.082.218-.173.33-.254.147-.106.32-.181.466-.291.336-.253.654-.524.912-.845.154-.193.283-.411.36-.649.107-.33.126-.678.11-1.022-.013-.248-.109-.491-.213-.718-.143-.315-.345-.607-.531-.892-.123-.19-.265-.365-.415-.534-.238-.266-.499-.508-.784-.725-.328-.247-.684-.462-1.048-.652-.439-.228-.902-.39-1.376-.484-.324-.064-.653-.084-.982-.06-.376.027-.753.089-1.118.194-.391.113-.777.258-1.141.433-.386.185-.748.407-1.09.656-.349.255-.675.539-.966.857-.461.502-.804 1.098-1.027 1.752-.112.327-.188.668-.235 1.01-.087.628-.036 1.266.146 1.877.134.451.345.876.618 1.261.332.47.736.892 1.177 1.256.389.321.82.596 1.274.815.325.156.664.278 1.007.374.295.083.599.13.905.139.301.009.603-.012.9-.066.404-.074.794-.217 1.171-.391.406-.187.78-.433 1.128-.715.276-.224.533-.471.757-.746.214-.264.398-.553.546-.859.114-.236.194-.486.23-.743.027-.19.006-.384-.043-.57-.047-.185-.13-.356-.224-.518-.133-.227-.299-.434-.473-.626-.197-.217-.417-.413-.639-.602-.213-.18-.442-.342-.66-.517-.173-.139-.34-.287-.502-.437-.155-.145-.306-.295-.438-.46-.112-.139-.205-.294-.274-.458-.056-.133-.074-.279-.05-.421.027-.159.103-.306.184-.447.093-.164.211-.312.312-.473.109-.174.197-.36.262-.554.074-.223.117-.454.129-.688.015-.298-.038-.596-.129-.882-.081-.255-.2-.496-.335-.728-.136-.233-.298-.449-.47-.656-.184-.221-.389-.422-.596-.617-.214-.202-.446-.384-.678-.564-.231-.179-.471-.346-.711-.512z"/>
-        </svg>
-        Agendar minha Tattoo
-      </a>
-    </div>
-    
-    <!-- BOTÕES DE CONTATO E COMPARTILHAMENTO -->
+
+    <!-- CONTATO -->
     <footer class="contact-icons">
       <a href="https://wa.me/559281708914" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="metal-texture">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" loading="lazy">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" loading="lazy" width="45" height="45">
       </a>
       <a href="https://www.instagram.com/ale.tatuagem/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="metal-texture">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" loading="lazy">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" loading="lazy" width="45" height="45">
       </a>
-      <div class="share-btn metal-texture" id="shareBtn" aria-label="Compartilhar site">
+      <div class="share-btn metal-texture" id="shareBtn" aria-label="Compartilhar site" role="button" tabindex="0">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
         </svg>
       </div>
     </footer>
-    
+
+    <!-- COPYRIGHT -->
     <div class="copyright-footer">
-      © 2017 Alê Tatuagem. Todos os direitos reservados.
+      &copy; 2017 Alê Tatuagem &mdash; Alessàndrho Peréira <span class="heart" aria-hidden="true">🦁</span>
     </div>
   </div>
-  
-  <!-- MODAL DE COMPARTILHAMENTO -->
-  <div class="share-modal" id="shareModal">
+
+  <!-- MODAL COMPARTILHAR -->
+  <div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
     <div class="share-content metal-texture">
-      <button class="close-share" id="closeShare">&times;</button>
-      <h3>Compartilhar Site</h3>
-      <div class="share-url" id="shareUrl"></div>
+      <button class="close-share" id="closeShare" aria-label="Fechar modal">&times;</button>
+      <div class="modal-icon" aria-hidden="true">🔗</div>
+      <h3 id="shareModalTitle">Compartilhar Site</h3>
+      <div class="share-url" id="shareUrl" aria-label="Link do site"></div>
       <div class="share-actions">
-        <button id="copyUrl">Copiar Link</button>
-        <button id="shareNative">Compartilhar</button>
+        <button id="copyUrl">📋 Copiar Link</button>
+        <button id="shareNative">📤 Compartilhar</button>
       </div>
     </div>
   </div>
-  
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Elementos DOM
+      // ===== ELEMENTOS =====
       const searchForm = document.getElementById('searchForm');
       const searchInput = document.getElementById('searchTerm');
       const shareBtn = document.getElementById('shareBtn');
@@ -706,102 +690,157 @@
       const copyUrl = document.getElementById('copyUrl');
       const shareNative = document.getElementById('shareNative');
       const suggestionTags = document.querySelectorAll('.tag');
-      
+
       const currentUrl = window.location.href;
-      
-      // Função para buscar tatuagem
+
+      // ===== FUNÇÃO DE BUSCA =====
       function searchTattoo(searchTermValue) {
         const searchTerm = searchTermValue.trim();
         
         if (!searchTerm) {
-          alert("Por favor, digite um estilo de tatuagem!");
+          alert('Por favor, digite um estilo de tatuagem!');
           searchInput.focus();
           return;
         }
-        
+
         const pinterestUrl = `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(`${searchTerm} tattoo`)}`;
         window.open(pinterestUrl, '_blank');
       }
-      
-      // Submit do formulário
+
+      // ===== EVENTOS DE BUSCA =====
       searchForm.addEventListener('submit', (event) => {
         event.preventDefault();
         searchTattoo(searchInput.value);
       });
-      
-      // Busca com Enter
-      searchInput.addEventListener('keypress', (e) => {
+
+      searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
           searchTattoo(searchInput.value);
         }
       });
-      
-      // Sugestões de busca
-      suggestionTags.forEach(tag => {
+
+      // ===== SUGESTÕES =====
+      suggestionTags.forEach((tag) => {
         tag.addEventListener('click', () => {
           const searchValue = tag.getAttribute('data-search');
           searchInput.value = searchValue;
           searchTattoo(searchValue);
         });
+
+        tag.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            tag.click();
+          }
+        });
+        tag.setAttribute('role', 'button');
+        tag.setAttribute('tabindex', '0');
       });
-      
-      // Funções de Compartilhamento
+
+      // ===== MODAL DE COMPARTILHAR =====
       function openShareModal() {
         shareUrl.textContent = currentUrl;
         shareModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        setTimeout(() => closeShare.focus(), 100);
       }
-      
+
       function closeShareModal() {
         shareModal.classList.remove('active');
         document.body.style.overflow = '';
+        shareBtn.focus();
       }
-      
+
       function copyToClipboard() {
-        navigator.clipboard.writeText(currentUrl).then(() => {
-          alert('Link copiado para a área de transferência!');
-          closeShareModal();
-        }).catch(err => {
-          console.error('Erro ao copiar: ', err);
-          alert('Erro ao copiar o link. Tente novamente.');
-        });
+        navigator.clipboard.writeText(currentUrl)
+          .then(() => {
+            alert('✅ Link copiado para a área de transferência!');
+            closeShareModal();
+          })
+          .catch(() => {
+            const textArea = document.createElement('textarea');
+            textArea.value = currentUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+              document.execCommand('copy');
+              alert('✅ Link copiado para a área de transferência!');
+              closeShareModal();
+            } catch (err) {
+              alert('❌ Erro ao copiar o link. Tente novamente.');
+            }
+            document.body.removeChild(textArea);
+          });
       }
-      
+
       function shareNativeFunction() {
         if (navigator.share) {
           navigator.share({
             title: 'Alê Tatuagem - Buscar Design de Tatuagem',
             text: 'Encontre inspirações incríveis para sua próxima tatuagem e agende com o Alê Tatuagem!',
-            url: currentUrl
-          }).then(() => {
-            console.log('Compartilhamento realizado com sucesso!');
-            closeShareModal();
-          }).catch(err => {
-            console.error('Erro ao compartilhar: ', err);
-          });
+            url: currentUrl,
+          })
+            .then(() => {
+              console.log('Compartilhado com sucesso!');
+              closeShareModal();
+            })
+            .catch((err) => {
+              if (err.name !== 'AbortError') {
+                console.error('Erro ao compartilhar:', err);
+              }
+            });
         } else {
           copyToClipboard();
         }
       }
-      
-      // Event Listeners
+
+      // ===== EVENTOS DO MODAL =====
       shareBtn.addEventListener('click', openShareModal);
+
+      shareBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openShareModal();
+        }
+      });
+
       closeShare.addEventListener('click', closeShareModal);
       copyUrl.addEventListener('click', copyToClipboard);
       shareNative.addEventListener('click', shareNativeFunction);
-      
-      // Fechar modal ao clicar fora
+
       shareModal.addEventListener('click', (e) => {
         if (e.target === shareModal) {
           closeShareModal();
         }
       });
-      
-      // Fechar modal com ESC
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && shareModal.classList.contains('active')) {
           closeShareModal();
+        }
+      });
+
+      // ===== TRAP DE FOCO NO MODAL =====
+      shareModal.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+          const focusable = shareModal.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          const firstFocusable = focusable[0];
+          const lastFocusable = focusable[focusable.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
         }
       });
     });
